@@ -1,0 +1,23 @@
+<ul class="navbar-nav cart-items" *ngIf="items().length">
+	<li class="nav-item" *ngFor="let product of items()">
+		<div class="media">
+			<img class="img-thumb" src="{{product.imagem}}"  alt="{{product.nome}}">
+			<div class="media-body">
+				<h5 class="mt-0">{{product.nome}} </h5>
+				<!-- <span>{{product.price.installments}}x de {{product.price.installmentValue | currency: 'BRL': true}}</span>
+				<span>ou R$ {{product.price.value | currency: 'BRL': true}} à vista</span> -->
+			</div>
+			<span class="remove-item" (click)="removeItem(product)">x</span>
+		</div>
+	</li>
+	<li class="total-cart text-right">
+		<p>subtotal</p>
+		<span id="sub-ins">em {{installments()}}x {{totalIns() | currency: 'BRL': true}}</span>
+		<span id="sub-cash">ou {{total() | currency: 'BRL': true}} à vista</span>
+	</li>
+</ul>
+<ul class="navbar-nav cart-items" *ngIf="items().length === 0">
+	<li class="nav-item">
+		Seu carrinho está vazio :/
+	</li>
+</ul>

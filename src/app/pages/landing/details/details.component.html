@@ -1,0 +1,105 @@
+<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
+
+    <!-- Header & Cards -->
+    <div class="relative pt-8 pb-12 sm:pt-20 sm:pb-24 px-6 sm:px-16 overflow-hidden">
+        <!-- Background - @formatter:off -->
+        <svg class="-z-1 absolute inset-0" viewBox="0 0 960 540" width="100%" height="100%"
+            preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <g class="opacity-40 text-gray-200 dark:text-gray-800" fill="none" stroke="currentColor" stroke-width="100">
+                <circle r="234" cx="196" cy="23"></circle>
+                <circle r="234" cx="790" cy="491"></circle>
+            </g>
+        </svg>
+        <!-- @formatter:on -->
+        <!-- Header -->
+        <div class="flex flex-col items-center">
+            <h2 class="text-xl font-semibold">Detalhes</h2>
+            <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
+                Veja as vantagens das nossas modalidades
+            </div>
+
+        </div>
+        <!-- Card -->
+        <ng-container *ngIf="product$ | async as produto">
+
+            <div class="flex flex-col items-center w-auto mt-10 sm:mt-20 sm:mb-20">
+                <fuse-card
+                    class="flex-row lg:flex-row md:w-220 sm:w-full w-auto lg:max-w-7xl justify-center text-center overflow-y-hidden">
+                    <div class="m-5 card-img-top mb-15 md:p-5 sm:w-full">                       
+                        <img class="w-full h-full object-contain sm:pb-8" src="{{produto.imagem}}" alt="Card cover image">
+                        <span class=" md:text-2xl font-semibold leading-tight md:mb-9 sm:text-sm">{{produto.nome}}</span>
+                    </div>
+                </fuse-card>
+            </div>
+            <div class="flex flex-col items-center mt-10 sm:mt-20">
+                <fuse-card class="flex-col lg:flex-row w-full lg:max-w-7xl overflow-x-auto overflow-y-hidden">
+                    <div
+                        class="grid grid-flow-col lg:grid-flow-row min-w-max lg:min-w-0 divide-x lg:divide-x-0 lg:divide-y">
+                        <!-- TIERS -->
+                        <div
+                            class="sticky left-0 grid grid-flow-row auto-rows-fr lg:grid-flow-col lg:auto-cols-fr lg:max-w-none divide-y lg:divide-y-0 lg:divide-x shadow-lg lg:shadow-none border-r lg:border-r-0 bg-card rounded-l lg:rounded-l-none">
+
+                            <div class="py-8 px-4"></div>
+                            <ng-container *ngIf="modalidades">
+                                <ng-container *ngFor="let modalidade of modalidades">
+                                    <div class="flex flex-col">
+                                        <div class="flex flex-col justify-center p-4 pt-3 lg:py-8">
+                                            <div class="text-xl lg:text-2xl font-medium">{{ modalidade.nome  }}</div>
+                                            <div class="flex items-baseline lg:mt-4 whitespace-nowrap">
+                                                <div class="hidden lg:block text-lg text-secondary">por</div>
+                                                <div class="lg:ml-2 text-2xl lg:text-4xl font-bold tracking-tight">
+                                                    <ng-container> {{modalidade.preco| currency:'BRL'}}</ng-container>
+                                                </div>
+                                                <div class="ml-2 text-lg text-secondary">/ dia</div>
+                                            </div>
+                                            
+                                            <button class="w-full min-h-8 h-8 lg:min-h-10 lg:h-10 mt-3 lg:mt-6"
+                                                mat-stroked-button [color]="'primary'" (click)="addCart(produto, modalidade)">
+                                                <span class="lg:hidden"><mat-icon aria-hidden="false"
+                                                    matTooltip="Adicionar no Carrinho"
+                                                     aria-label="Adicionar no Carrinho" fontIcon="add_shopping_cart">add_shopping_cart</mat-icon>
+                                                </span>
+                                                <span class="hidden lg:inline-flex">Adicionar no Carrinho</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                                                        
+                        </div>
+
+                        <!-- FEATURES -->
+                        <div class="hidden lg:block p-4 col-span-full bg-gray-100 dark:bg-transparent">
+                            <div class="text-md font-semibold">ITENS INCLUSOS EM CADA MODALIDADE</div>
+                        </div>
+                        <ng-container *ngIf="itens">
+                            <ng-container *ngFor="let item of itens">
+                                <div
+                                class="grid grid-flow-row auto-rows-fr lg:grid-flow-col lg:auto-cols-fr divide-y lg:divide-y-0 lg:divide-x">
+                             
+                                <div
+                                    class="flex items-center lg:items-start max-w-32 lg:max-w-none p-4 font-medium lg:font-normal text-center lg:text-left">
+                                    {{ item.nome }} {{ item.descricao }}</div>
+    
+                                <div class="flex items-center justify-center lg:justify-start p-4">
+                                    <mat-icon class="icon-size-5 text-green-600"
+                                        [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                </div>
+                                <!-- Premium -->
+                                <div class="flex items-center justify-center lg:justify-start p-4">
+                                    <mat-icon class="icon-size-5 text-green-600"
+                                        [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                </div>
+                               
+    
+                                
+                            </div>
+                            </ng-container>                   
+                        </ng-container>
+                    </div>
+                </fuse-card>
+            </div>
+        </ng-container>
+    </div>
+
+</div>

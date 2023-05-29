@@ -1,0 +1,33 @@
+.apikey .mat-form-field-flex {
+    padding-right: unset !important;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 25vh;
+    object-fit: contain;
+    border-radius: 5px;
+}
+.card-car{
+    display: flex;
+    height: auto;
+    a{
+        align-self: flex-end;
+        position: absolute;
+        bottom: 0;
+        border-bottom-left-radius: 1rem !important;
+        border-bottom-right-radius: 1rem !important;
+        border-top-right-radius: unset !important;
+        border-top-left-radius: unset !important;
+    }
+}
+
+@media (max-width: 850px) {
+    .landing{
+        flex-direction: column !important;
+    }
+
+    .card-car{
+       margin-bottom: 2rem;
+    }
+}

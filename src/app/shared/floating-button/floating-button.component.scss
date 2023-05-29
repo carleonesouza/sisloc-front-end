@@ -1,0 +1,28 @@
+.example-flex-container {
+    display: flex;
+    width: 100%;
+    float: right;
+    justify-items: end;
+    align-items: end;
+    justify-content: right;
+    padding: 1rem;
+    position: absolute;
+    button{
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.7rem;
+      
+    }
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media (max-width: 850px) {
+    .example-flex-container {
+        padding: unset !important;
+    }
+  }
