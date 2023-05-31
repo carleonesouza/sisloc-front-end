@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, ReplaySubject, catchError, of, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { environment } from 'environments/environment';
 import { Usuario } from 'app/models/usuario';
 import { HandleError } from 'app/utils/handleErrors';
-import { Loja } from 'app/models/loja';
 
 @Injectable()
 export class AuthService {
@@ -166,12 +165,6 @@ export class AuthService {
         // Remove the access user from the local storage
         localStorage.removeItem('user');
 
-        // Remove the access caixaId from the local storage
-        localStorage.removeItem('caixaId');
-
-        // Remove the access caixaId from the local storage
-        localStorage.removeItem('store');
-
         // Set the authenticated flag to false
         this._authenticated = false;
 
@@ -186,8 +179,8 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: Usuario, id: string): Observable<any> {
-        return this._httpClient.post(environment.apiManager + 'users/register/'+id, user).pipe(
+    signUp(user: Usuario): Observable<any> {
+        return this._httpClient.post(environment.apiManager + 'users/register', user).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
@@ -207,17 +200,6 @@ export class AuthService {
         );
     }
 
-    obterSignature(email) {
-        return this._httpClient.post(environment.apiManager + 'signature', email).pipe(
-            switchMap((response: any) => of(response))
-        );
-    }
-
-    registerStoreApp(store: Loja){
-        return this._httpClient.post(environment.apiManager + 'stores/register', store).pipe(switchMap((response: any) => of(response)),
-        catchError(this.error.handleError<any>('registerStoreApp'))
-        )
-    }
 
 
     /**

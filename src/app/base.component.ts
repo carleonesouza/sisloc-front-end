@@ -13,7 +13,7 @@ export class BaseComponent implements OnInit {
 
    ngOnInit(): void {
      if(this.authService.check()){
-        this.router.navigate(['/inicio']);
+        this.router.navigate(['/loja/produtos']);
      }else{
       this.authService.signOut();
      }

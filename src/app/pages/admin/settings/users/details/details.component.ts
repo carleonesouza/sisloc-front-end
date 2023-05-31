@@ -193,21 +193,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.editMode = false;
   }
 
-  getUserAdmKey() {
-    if (!localStorage.getItem('user')) {
-      return;
-    }
-    const { apiKey } = new Usuario(JSON.parse(localStorage.getItem('user')));
-
-    return apiKey;
-  }
-
   removerUser(){
     if (this.userForm.valid) {
       const user = new Usuario(this.userForm.value);
       this.saving = true;
       user.status = false;
-      user.address.status = false;
+     
 
       if (user) {
         this._usersService
@@ -234,8 +225,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (this.userForm.valid) {
       const user = new Usuario(this.userForm.value);
       this.saving = true;
-      user.address = new Address(this.userForm.get('address').value);
-      user.apiKey =  this.getUserAdmKey();
       if (user) {
         this._usersService
           .addUser(user)

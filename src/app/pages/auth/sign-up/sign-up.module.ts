@@ -16,7 +16,6 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { FuseSplashScreenModule } from '@fuse/services/splash-screen';
 import { MaterialAppModule } from 'material-app.module';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const maskConfig: Partial<IConfig> = { validation: false};
@@ -40,7 +39,6 @@ const maskConfig: Partial<IConfig> = { validation: false};
         SharedModule,
         FuseDrawerModule,
         FuseSplashScreenModule,
-        NgApexchartsModule,
         FuseFindByKeyPipeModule,
         MaterialAppModule,
     

@@ -28,9 +28,9 @@ export class UsersService {
   }
 
   getAllUsers(first = 1, last= 20): Observable<any[]> {
-    const { apiKey } = new Usuario(JSON.parse(localStorage.getItem('user')));
+  
 
-    return this._httpClient.get<any[]>(environment.apiManager + 'users/group/'+apiKey )
+    return this._httpClient.get<any[]>(environment.apiManager + 'users/group/' )
       .pipe(
         tap((result) => {
           let users = result;
@@ -53,8 +53,8 @@ export class UsersService {
 
 
   addUser(usuarioCliente): Observable<any> {
-    const { _id } = new Usuario(JSON.parse(localStorage.getItem('user')));
-    return this._httpClient.post(environment.apiManager + 'users/create-user/'+_id, usuarioCliente)
+ 
+    return this._httpClient.post(environment.apiManager + 'users/create-user/', usuarioCliente)
       .pipe(
         tap((result) => {
           this._user.next(result);

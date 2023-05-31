@@ -19,6 +19,9 @@ export const pagesRoutes: Route[] = [
                     {
                         path: 'inicio', loadChildren: () => import('app/pages/admin/admin.module').then(admin => admin.AdminModule),
                     },
+                    { 
+                        path: 'loja', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) 
+                    },                   
                     
                 ]
             },
@@ -51,20 +54,6 @@ export const pagesRoutes: Route[] = [
                 },
                 children: [
                     { path: 'sign-out', loadChildren: () => import('app/pages/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule) },
-                ]
-            },
-
-            // Landing routes
-            {
-                path: '',
-                component: LayoutComponent,
-                data: {
-                    layout: 'empty'
-                },
-                children: [
-                    { path: 'loja', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) },
-                   
-        
                 ]
             },
 
