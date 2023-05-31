@@ -1,23 +1,159 @@
-<ul class="navbar-nav cart-items" *ngIf="items().length">
-	<li class="nav-item" *ngFor="let product of items()">
-		<div class="media">
-			<img class="img-thumb" src="{{product.imagem}}"  alt="{{product.nome}}">
-			<div class="media-body">
-				<h5 class="mt-0">{{product.nome}} </h5>
-				<!-- <span>{{product.price.installments}}x de {{product.price.installmentValue | currency: 'BRL': true}}</span>
-				<span>ou R$ {{product.price.value | currency: 'BRL': true}} à vista</span> -->
-			</div>
-			<span class="remove-item" (click)="removeItem(product)">x</span>
+<div class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 ">
+
+	<!-- Header -->
+	<div
+		class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b bg-white">
+		<!-- Loader -->
+		<div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+			<mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
 		</div>
-	</li>
-	<li class="total-cart text-right">
-		<p>subtotal</p>
-		<span id="sub-ins">em {{installments()}}x {{totalIns() | currency: 'BRL': true}}</span>
-		<span id="sub-cash">ou {{total() | currency: 'BRL': true}} à vista</span>
-	</li>
-</ul>
-<ul class="navbar-nav cart-items" *ngIf="items().length === 0">
-	<li class="nav-item">
-		Seu carrinho está vazio :/
-	</li>
-</ul>
+		<!-- Title -->
+		<div class="flex flex-col items-center">
+			<div class="flex text-4xl font-extrabold tracking-tight">Carrinho</div>
+			<div class="flex-auto ml-0.5 font-medium text-secondary mt-2">
+				<a mat-button class="bg-transparent" [routerLink]="['/loja/produtos']"> Volta para Loja
+				
+			</a></div>
+		</div>
+	</div>
+	<div
+		class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:m-10 sm:m-0 md:justify-start flex-auto min-w-0">
+		<div
+			class="md:flex md:items-center md:justify-center w-full sm:w-auto md:w-1/2 sm:-mr-0 sm:ml-0 md:-mr-30 md:ml-9 sm:rounded-2xl md:rounded-none card-resumo">
+
+
+			<fuse-card class="flex flex-row w-full min-h-100" #fuseCard>
+				<!-- Main -->
+				<div class="flex flex-row flex-auto overflow-hidden">
+					<!-- Products list -->
+					<div class="flex flex-col flex-auto w-full sm:mb-18 overflow-hidden sm:overflow-y-auto">
+						<ng-container>
+							<ng-container *ngIf="produtos ; else noProducts">
+								<div class="flex flex-col w-full">
+									<!-- Header -->
+									<div class="flex flex-row top-0 w-full place-content-between py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+										matSort matSortDisableClear>
+
+										<div class="hidden sm:block basis-1/2" [mat-sort-header]="'name'">Produtos</div>
+										<div class="hidden sm:block basis-1/4" [mat-sort-header]="'price'">Preço</div>
+										<div class="hidden lg:block basis-1/4" [mat-sort-header]="'active'">Quantidade
+										</div>
+										<div class="hidden sm:block basis-1/12" [mat-sort-header]="'active'">Ações</div>
+									</div>
+									<!-- Rows -->
+									<ng-container *ngIf="produtos">
+										<ng-container *ngFor="let produto of produtos;let i = index; trackBy: trackByFn">
+											<div
+												class="flex flex-col md:flex-row sm:flex-col items-center top-0 w-full place-content-between py-3 px-6 md:px-8 border-b">
+												<!-- Image -->
+												<div class="flex items-center">
+													<div
+														class="flex flex-0 items-center justify-center w-30 h-auto rounded overflow-hidden">
+														<img class="w-auto" *ngIf="produto.imagem"
+															[alt]="'Product thumbnail image'" [src]="produto.imagem">
+														<div class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase"
+															*ngIf="!produto.imagem">
+															NO THUMB
+														</div>
+													</div>
+													<div class="flex m-3 font-bold font-mono">
+														{{produto.nome}}
+													</div>
+												</div>
+												<div class="flex font-bold font-mono p-2">
+													{{produto.modalidades[0].preco | currency:'BRL'}}
+												</div>
+
+												<div class="flex font-bold font-mono p-2">
+													<form>
+													<mat-form-field>
+														<button mat-icon-button matPreffix>
+															<mat-icon>remove</mat-icon>
+														</button>
+														<input matInput value="{{produto.modalidades.length}}" disabled />
+														<button mat-icon-button matSuffix (click)="addCart(produto, produto.modalidades[0])">
+															<mat-icon>add</mat-icon>
+														</button>
+													</mat-form-field>
+													</form>
+												</div>
+
+												<div class="flex">
+
+													<button mat-icon-button aria-label="Remover produto" color="warn"
+														matTooltip="Remover Produto" (click)="removeItem(produto)">
+														<mat-icon>delete</mat-icon>
+													</button>
+												</div>
+											</div>
+										</ng-container>
+									</ng-container>
+								</div>
+							</ng-container>
+						</ng-container>
+						<ng-template #noProducts>
+							<div class="flex flex-col justify-center w-full h-full items-center p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">								
+								<h4>Seu carrinho está vazio!</h4>
+								<h6>Adicione itens agora!</h6>
+								<button mat-raised-button routerLink="/loja/produtos" color="primary" class="mt-5">Ir para Loja</button>
+							</div>
+						</ng-template>
+					</div>
+				</div>
+			</fuse-card>
+		</div>
+
+		<div class="md:flex flex-auto items-center justify-center md:w-1/2 sm:w-full mb-10 card-resumo" *ngIf="produtos">
+			<fuse-card class="flex-col w-full md:max-w-100 sm:mx-w-auto p-3 sm:py-9 sm:px-9">
+				<div class="text-4xl font-bold tracking-tight leading-tight">Resumo</div>
+
+				<div class="w-8 h-1 my-10 rounded bg-accent"></div>
+
+				<div class="flex flex-col w-full">
+					<div
+						class="flex flex-row place-content-between p-3 mt-2 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+						<div class="flex font-mono font-bold">
+							Subtotal
+						</div>
+						<div class="flex font-mono text-primary-800 font-bold">
+							{{ subtotal | currency:'BRL'}}
+						</div>
+					</div>
+					<div
+						class="flex flex-row place-content-between p-3 mt-2 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+						<div class="flex font-mono font-bold">
+							Taxas
+						</div>
+						<div class="flex font-mono text-primary-800 font-bold">
+							{{ taxa | currency:'BRL'}}
+						</div>
+					</div>
+					<div
+						class="flex flex-row place-content-between p-3 mt-2 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+						<div class="flex font-mono font-bold">
+							Desconto
+						</div>
+						<div class="flex font-mono text-primary-800 font-bold">
+							{{ desconto | currency:'BRL'}}
+						</div>
+					</div>
+					<div
+						class="flex flex-row place-content-between p-3 mt-2 border-4 border-light-blue-500 border-opacity-75 rounded-lg">
+						<div class="flex font-mono font-bold">
+							Total
+						</div>
+						<div class="flex font-mono text-primary-800 font-bold">
+							{{ total | currency:'BRL'}}
+						</div>
+					</div>
+				</div>
+				<button class="fuse-mat-button-large mt-10" mat-flat-button [color]="'primary'">
+					Ir para Pagamento
+				</button>
+
+			</fuse-card>
+
+
+		</div>
+	</div>
+</div>

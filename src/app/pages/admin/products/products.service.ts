@@ -128,6 +128,17 @@ export class ProductsService {
       );
   }
 
+  searchProduct(terms): Observable<any> {
+    return this._httpClient.get<any>(environment.apiManager + 'produtos/search',{ params: terms})
+    .pipe(
+      tap((products) => {
+        console.log(products);
+        this._products.next(products);
+      }),
+      catchError(this.error.handleError<any>('searchProduct'))
+    );
+}
+
   addProduct(product): Observable<any> {
     const { _id } = new Usuario(JSON.parse(localStorage.getItem('user')));
     return this._httpClient.post(environment.apiManager + 'products/'+_id, product)

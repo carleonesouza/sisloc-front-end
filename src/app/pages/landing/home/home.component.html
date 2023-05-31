@@ -27,10 +27,10 @@
       </div>
 
 
-    <div class="flex w-full justify-center p-9 landing">
+    <div class="flex w-full justify-center md:p-9 sm:p-2 landing">
         <ng-container *ngIf="products$ | async as products">
             <ng-container *ngIf="products.length ; else noListas">
-                <div class="flex md:flex-row flex-wrap space-x-4 sm:flex-col m-3 sm:m-0 justify-center items-center">
+                <div class="flex md:flex-row flex-wrap md:space-x-4 sm:flex-col justify-center items-center">
                 <ng-container *ngFor="let product of products; let i = index; trackBy: trackByFn">                  
 
                         <fuse-card class="flex flex-col max-w-100 w-full card-car mt-5" #fuseCard>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ProductsService } from 'app/pages/admin/products/products.service';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, switchMap, take, takeUntil } from 'rxjs';
 
 
 
@@ -46,6 +46,18 @@ export class HomeComponent implements  OnInit
           });
         });
 
+  }
+
+  searchItem(event) {
+    if (event.target.value !== '' && event.target.valeu !== null && event.target.value !== undefined) {
+      this.products$.pipe(
+        take(1),
+        takeUntil(this._unsubscribeAll),
+        switchMap(() =>
+          this._produtosService.searchProduct(event.target.value)
+        )
+      ).subscribe();
+    }
   }
 
 

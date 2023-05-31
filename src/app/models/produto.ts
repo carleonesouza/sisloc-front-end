@@ -8,6 +8,7 @@ export class Produto {
     modalidades: Array<Modalidade>;
     classificacao: string;
     modelo: string;
+    quantidade?: number;
     imagem: string;
     status: boolean;
 

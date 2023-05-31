@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FuseNavigationModule } from '@fuse/components/navigation';
@@ -53,7 +53,7 @@ const maskConfig: Partial<IConfig> = { validation: false};
     FuseFindByKeyPipeModule,
     FuseAlertModule
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-br' },{
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-br' },{ provide: LOCALE_ID, useValue: 'pt-br' },{
     provide: MAT_DATE_FORMATS,
     useValue: {
       display: {

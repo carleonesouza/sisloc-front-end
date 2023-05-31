@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HandleError } from 'app/utils/handleErrors';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 
 
 
@@ -15,12 +15,42 @@ import { catchError, take } from 'rxjs/operators';
 })
 export class PagesService {
 
-  constructor(private _httpClient: HttpClient ) { }
+  private _modalidades: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _modalidade: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
 
-  getDoc(): Observable<any>{
-    return this._httpClient.get<any>(environment.apiDocs + 'api-docs')
-      .pipe();
+  constructor(private _httpClient: HttpClient,private error: HandleError ) { }
 
+
+  get modalidades$(): Observable<any[]> {
+    return this._modalidades.asObservable();
   }
+
+  get modalidade$(): Observable<any> {
+    return this._modalidade.asObservable();
+  }
+
+
+
+  getAllModalidades() {
+    return this._httpClient.get<any[]>(environment.apiManager + 'modalidades')
+      .pipe(
+        tap((modalidades) => {       
+          this._modalidades.next(modalidades);
+        }),
+        catchError(this.error.handleError<any[]>('getAllProducts'))
+      );
+  }
+
+
+  getModalidadeById(id): Observable<any> {
+      return this._httpClient.get<any>(environment.apiManager + 'modalidades/'+id)
+      .pipe(
+        tap((modalidade) => {
+          this._modalidade.next(modalidade);
+        }),
+        catchError(this.error.handleError<any>('getProductById'))
+      );
+  }
+
 }
