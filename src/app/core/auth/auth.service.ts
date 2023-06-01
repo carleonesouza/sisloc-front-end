@@ -30,11 +30,11 @@ export class AuthService {
      * Setter & getter for access token
      */
     set accessToken(token: string) {
-        localStorage.setItem('accessToken', token);
+        localStorage.setItem('accessToken', JSON.stringify(token));
     }
 
     get accessToken(): string {
-        return localStorage.getItem('accessToken');
+        return JSON.parse(localStorage.getItem('accessToken'));
     }
 
     get isLoggedIn$(): Observable<boolean> {

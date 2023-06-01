@@ -14,7 +14,7 @@ export const pagesRoutes: Route[] = [
             {
                 path: '',
                 component: LayoutComponent,
-                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
                 children: [
                     {
                         path: 'inicio', loadChildren: () => import('app/pages/admin/admin.module').then(admin => admin.AdminModule),

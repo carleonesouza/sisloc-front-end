@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'configuracoes', loadChildren: () => import('app/pages/admin/settings/settings.module').then(m => m.SettingsModule),

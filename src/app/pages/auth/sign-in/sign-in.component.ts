@@ -38,11 +38,7 @@ export class AuthSignInComponent implements OnInit
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * hughes.brian@company.com
-     * admin
-     * On init
-     */
+
     ngOnInit(): void
     {
         // Create the form
