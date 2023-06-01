@@ -88,12 +88,12 @@ export class PageComponent implements OnInit, OnDestroy, AfterViewInit {
 
         //Set menu for specific role
         this.navigationData.map((item) => {
-            if (this.user) {
-                const profile = new Perfil();
-                if (profile.role.toLowerCase().localeCompare(String('Admin').toLocaleLowerCase()) === 1 && item.id === 'admin') {
-                    item.hidden = () => true;
-                }
-            }
+            // if (!this.user) {
+            //     const profile = new Perfil();
+            //     if (profile.role.toLowerCase().localeCompare(String('Admin').toLocaleLowerCase()) === 1 && item.id === 'admin') {
+            //         item.hidden = () => true;
+            //     }
+            // }
 
         });
 

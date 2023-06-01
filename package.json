@@ -1,8 +1,8 @@
 {
     "name": "@fuse/demo",
     "version": "14.1.1",
-    "description": "Fuse - Angular Admin Template and Starter Project",
-    "author": "https://themeforest.net/user/srcn",
+    "description": "Lojat",
+    "author": "Carleone Souza",
     "license": "https://themeforest.net/licenses/standard",
     "private": true,
     "scripts": {

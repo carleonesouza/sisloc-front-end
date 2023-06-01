@@ -17,9 +17,7 @@ export class AuthService {
      * Constructor
      */
     constructor(
-        private _httpClient: HttpClient,
-        private error: HandleError
-    ) {
+        private _httpClient: HttpClient) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -30,11 +28,11 @@ export class AuthService {
      * Setter & getter for access token
      */
     set accessToken(token: string) {
-        localStorage.setItem('accessToken', JSON.stringify(token));
+        localStorage.setItem('accessToken', token);
     }
 
     get accessToken(): string {
-        return JSON.parse(localStorage.getItem('accessToken'));
+        return localStorage.getItem('accessToken');
     }
 
     get isLoggedIn$(): Observable<boolean> {

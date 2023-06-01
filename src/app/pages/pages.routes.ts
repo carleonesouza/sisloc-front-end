@@ -11,21 +11,7 @@ export const pagesRoutes: Route[] = [
         path: '',
         component: PageComponent,
         children: [
-            {
-                path: '',
-                component: LayoutComponent,
-                canActivateChild: [AuthGuard],
-                children: [
-                    {
-                        path: 'inicio', loadChildren: () => import('app/pages/admin/admin.module').then(admin => admin.AdminModule),
-                    },
-                    { 
-                        path: 'loja', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) 
-                    },                   
-                    
-                ]
-            },
-           
+            
             // Auth routes for guests
             {
                 path: '',
@@ -57,6 +43,9 @@ export const pagesRoutes: Route[] = [
                 ]
             },
 
+        
+           
+
             // Admin routes
             {
                 path: '',
@@ -64,6 +53,13 @@ export const pagesRoutes: Route[] = [
                 canActivateChild: [AuthGuard],
                 component: LayoutComponent,
                 children: [
+
+                    {
+                        path: 'inicio', loadChildren: () => import('app/pages/admin/admin.module').then(admin => admin.AdminModule),
+                    },
+                    { 
+                        path: 'loja', loadChildren: () => import('app/pages/landing/landing.module').then(m => m.LandingHomeModule) 
+                    },   
                     // 404 & Catch all
                     { path: '401-unauthorized', component: Error401Component },
                     { path: 'error-500', component: Error500Component },

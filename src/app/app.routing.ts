@@ -5,7 +5,7 @@ export const appRoutes: Route[] = [
 
     {path: '', pathMatch : 'full', redirectTo: 'loja/produtos'},
     {path: 'loja', pathMatch : 'full', redirectTo: 'loja/produtos'},
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: '/loja/produtos'},
+    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'inicio'},
 
     {
         path: '',
