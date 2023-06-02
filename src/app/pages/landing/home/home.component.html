@@ -17,7 +17,8 @@
                             matInput
                             [formControl]="searchInputControl"
                             [autocomplete]="'off'"
-                            [placeholder]="'Search contacts'">
+                            (blur)="searchItem($event)"
+                            [placeholder]="'Buscar Produtos'">
                     </mat-form-field>
                 </div>
                 <!-- Add contact button -->

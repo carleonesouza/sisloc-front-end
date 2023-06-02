@@ -12,12 +12,10 @@ export class BaseComponent implements OnInit {
     private router: Router) { }
 
    ngOnInit(): void {
-    console.log('Aqui');
      if(this.authService.check()){
-        this.router.navigate(['/inicio']);
+        this.router.navigate(['/loja/produtos']);
      }else{
       this.authService.signOut();
-      console.log('Aqui');
      }
 
   }

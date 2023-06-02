@@ -17,6 +17,9 @@ export class PagesService {
 
   private _modalidades: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
   private _modalidade: BehaviorSubject<any | null> = new BehaviorSubject(null);
+  private _itens: BehaviorSubject<any[] | null> = new BehaviorSubject(null);
+  private _item: BehaviorSubject<any | null> = new BehaviorSubject(null);
+
 
 
   constructor(private _httpClient: HttpClient,private error: HandleError ) { }
@@ -30,6 +33,13 @@ export class PagesService {
     return this._modalidade.asObservable();
   }
 
+  get itens$(): Observable<any[]> {
+    return this._itens.asObservable();
+  }
+
+  get item$(): Observable<any> {
+    return this._item.asObservable();
+  }
 
 
   getAllModalidades() {
@@ -39,6 +49,16 @@ export class PagesService {
           this._modalidades.next(modalidades);
         }),
         catchError(this.error.handleError<any[]>('getAllProducts'))
+      );
+  }
+
+  getItens() {
+    return this._httpClient.get<any[]>(environment.apiManager + 'itens')
+      .pipe(
+        tap((itens) => {       
+          this._itens.next(itens);
+        }),
+        catchError(this.error.handleError<any[]>('getItens'))
       );
   }
 

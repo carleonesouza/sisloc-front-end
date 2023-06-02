@@ -5,7 +5,7 @@ import { Produto } from 'app/models/produto';
 import { Usuario } from 'app/models/usuario';
 import { HandleError } from 'app/utils/handleErrors';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap, take, map, filter } from 'rxjs/operators';
 
 
@@ -129,10 +129,9 @@ export class ProductsService {
   }
 
   searchProduct(terms): Observable<any> {
-    return this._httpClient.get<any>(environment.apiManager + 'produtos/search',{ params: terms})
+    return this._httpClient.get<any>(environment.apiManager + 'produtos/search/'+terms)
     .pipe(
       tap((products) => {
-        console.log(products);
         this._products.next(products);
       }),
       catchError(this.error.handleError<any>('searchProduct'))

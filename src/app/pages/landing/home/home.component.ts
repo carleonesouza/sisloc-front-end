@@ -48,12 +48,12 @@ export class HomeComponent implements  OnInit
 
   }
 
-  searchItem(event) {
+  searchItem(event) {  
     if (event.target.value !== '' && event.target.valeu !== null && event.target.value !== undefined) {
       this.products$.pipe(
         take(1),
         takeUntil(this._unsubscribeAll),
-        switchMap(() =>
+        switchMap(() =>           
           this._produtosService.searchProduct(event.target.value)
         )
       ).subscribe();

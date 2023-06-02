@@ -47,10 +47,10 @@ export class AuthInterceptor implements HttpInterceptor
                 // Catch "401 Unauthorized" responses
                 if ( error instanceof HttpErrorResponse && error.status === 401 || error.status === 403 )
                 {
-                    // Sign out
-                    //this._authService.signOut();
+                    // Sign out                   
                     this._router.navigate(['401-unauthorized']);
-
+                    this._authService.signOut();
+                    
                     // Reload the app
                     //location.reload();
                 }
