@@ -46,6 +46,22 @@ export class HomeComponent implements  OnInit
           });
         });
 
+        this.searchInputControl.valueChanges
+        .pipe(
+            takeUntil(this._unsubscribeAll),
+            switchMap(query =>
+
+                // Search
+                this.products$ = this._produtosService.searchProduct(query)
+            )
+        )
+        .subscribe((result) =>{
+          this.products = result;
+            this.products.map((produto)=>{
+                this.descriptions = produto.descricao.split(",")
+            });
+        });
+
   }
 
   searchItem(event) {  
@@ -54,9 +70,15 @@ export class HomeComponent implements  OnInit
         take(1),
         takeUntil(this._unsubscribeAll),
         switchMap(() =>           
-          this._produtosService.searchProduct(event.target.value)
+        this._produtosService.searchProduct(event.target.value)
         )
-      ).subscribe();
+      ).subscribe((result) =>{
+        console.log(result)
+        this.products = result;
+          this.products.map((produto)=>{
+              this.descriptions = produto.descricao.split(",")
+          });
+      });
     }
   }
 

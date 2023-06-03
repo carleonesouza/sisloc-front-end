@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { Observable, Subject, map, merge, switchMap, takeUntil } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { ListProduct } from 'app/models/carrinho';
 
 @Component({
   selector: 'app-cart',
@@ -21,10 +22,13 @@ export class CartComponent implements OnInit {
   produtos: Produto[];
   flashMessage: 'success' | 'error' | null = null;
   isLoading: boolean = false;
-  subtotal;
+  subtotal=0;
+  locacoes$: Observable<any>;
+  locacoes: [];
   desconto = 0;
+  quantidade;
   taxa = 0;
-  total;
+  total=0;
   selectedProduct: null = null;
   selectedProductForm: FormGroup;
 
@@ -52,14 +56,27 @@ export class CartComponent implements OnInit {
     let cartSession = sessionStorage.getItem("cart");
     //carrinho não está vazio
     if (cartSession != null) {
-      this._cartService.getListOfProducts().subscribe((list) => {
-        if (list) {
-          this.produtos = list.produtos;
-          this.subtotal = list.total
-          this.total = this.subtotal;
+      this.locacoes$ =  this._cartService.getListOfProducts();
+      this.locacoes$.subscribe((list) =>{   
+  
+        if(list[0] !== null){         
+          this.locacoes = list;
+           this.locacoes.forEach((element: []) =>{
+            this.subtotal = 0;           
+             this.subtotal += element.map((item: ListProduct)=> item.total).reduce((prev, total) => prev + total, 0);
+              this.total = this.subtotal;                  
+           
+          }) 
+                      
+        }else{
+          this.locacoes = null;
+          this.subtotal=0;
+          this.total = 0;  
         }
-
+          
+       
       })
+      
     }
   }
 
@@ -84,20 +101,14 @@ export class CartComponent implements OnInit {
     })
   }
 
-  items(): Produto[] {
-    return this._cartService.getItems();
-  }
 
   removeItem(produto: Produto) {
     this._cartService.removeItem(produto);
   }
 
-  addCart(produto, modalidade) {
-    const prd = new Produto(produto);
-    prd.modalidades = [];
-    prd.modalidades.push(modalidade);
+  addCart(produto) {
+    const prd = new Produto(produto);  
     this._cartService.addItem(prd);
-
   }
   /**
    * Track by function for ngFor loops
